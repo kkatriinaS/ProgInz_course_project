@@ -45,6 +45,9 @@ public class User {
 
 
 public User (@NotNull String password, @NotNull String username, @NotNull String email ) {
+	super();
+	this.password = password;
+	this.email = email;
 }
 
 }

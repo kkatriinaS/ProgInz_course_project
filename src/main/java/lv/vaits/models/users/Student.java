@@ -1,4 +1,5 @@
 package lv.vaits.models.users;
+import jakarta.persistence.AttributeOverride;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -25,6 +26,7 @@ import lv.vaits.models.Course;
 @Getter
 @Setter
 @NoArgsConstructor
+@AttributeOverride (name = "Idp", column = @Column(name = "Ids"))
 public class Student extends Person {
 	
 	//TODO izveidot data jpa anotācijas
