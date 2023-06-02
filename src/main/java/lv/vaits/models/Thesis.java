@@ -1,6 +1,7 @@
 package lv.vaits.models;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import jakarta.persistence.Column;
@@ -20,7 +21,19 @@ import lombok.Setter;
 import lombok.ToString;
 import lv.vaits.models.users.AcademicPersonel;
 import lv.vaits.models.users.Student;
-import java.util.ArrayList;
+
+/*
+ * 
+ * pārlikt uz citu tabulu, kurai ir saite uz pasniedzeju, kas to temu piedāva
+ * Joma
+Grūtības_pakāpe
+Tēmas_apraksts
+Tēmas_pieejamība
+
+ * 
+ * 
+ * 
+ */
 
 @Table(name = "thesis_table")
 @Entity
@@ -36,34 +49,35 @@ public class Thesis {
 	private long idt;
 	
 	
-	//TODO pievienot nepieciešamās validācijas
-	@Column (name= "TitleLv")
+	//TODO pievienopt nepieciešamās validācijas
+	@Column(name = "TitleLv")
 	private String titleLv;
-		
-	//TODO pievienot nepieciešamās validācijas
-	@Column (name= "TitleEn")
+	
+	//TODO pievienopt nepieciešamās validācijas
+	@Column(name = "TitleEn")
 	private String titleEn;
 	
-	//TODO pievienot nepieciešamās validācijas
-	@Column (name= "Aim")
+	//TODO pievienopt nepieciešamās validācijas
+	@Column(name = "Aim")
 	private String aim;
-	
-	//TODO pievienot nepieciešamās validācijas
-	@Column (name= "Tasks")
+		
+	//TODO pievienopt nepieciešamās validācijas
+	@Column(name = "Tasks")
 	private String tasks;
 	
-	//TODO Servisā vai konstruktorā pie jauna objekta izveides jāizmanto LocalDateTime 
-	@Column(name = "submitDateTime")
+	
+	//TODO servisā vai kontrsuktorā pie jauna objekta izveides jāizmanto LocalDateTime.now()
+	@Column(name ="SubmitDateTime")
 	private LocalDateTime submitDateTime;
 	
-	@Column (name = "statusFromSupervisor")
+	@Column(name = "statusFromSupervisor")
 	private boolean statusFromSupervisor;
 	
-	//TODO servisā vai konstruktorā uzlikt submit pēc noklusējuma
-	@Column (name="accStatus")
+	//TODO servisā vai konstruktora uzlikt submit pēc noklusējuma
+	@Column(name = "accStatus")
 	private AcceptanceStatus accStatus;
 	
-	@Column(name = "AccDateTime")
+	@Column(name ="AccDateTime")
 	private LocalDateTime accDateTime;
 	
 	@ManyToOne
@@ -71,23 +85,31 @@ public class Thesis {
 	private Student student;
 	
 	@ManyToOne
-	@JoinColumn(name="Ida")
+	@JoinColumn(name = "Ida")
 	private AcademicPersonel supervisor;
-	
+	//TODO ja nepieciesams, izveidot saiti ar konsultantu/vērtētaju utt
 	@ManyToMany
 	@JoinTable(name = "thesis_reviewers",
-	joinColumns = @JoinColumn(name = "Ida"),
+	joinColumns = @JoinColumn(name = "Idt"),
 	inverseJoinColumns = @JoinColumn(name = "Ida"))
-	private Collection <AcademicPersonel> reviewers = new ArrayList<>();
+	private Collection<AcademicPersonel> reviewers = new ArrayList<>();
+	
+	
+	//TODO līdzīgu funkciju uztaisīt Academicpersonel klasē
+	public void addReviewer(AcademicPersonel reviewer) {
+		if(!reviewers.contains(reviewer)) {
+			reviewers.add(reviewer);
+		}
+	}
 
-	public Thesis(String titleLv, String titleEn, String aim, String tasks, boolean statusFromSupervisor,
-			Student student, AcademicPersonel supervisor) {
+
+	public Thesis(String titleLv, String titleEn, String aim, String tasks, Student student,
+			AcademicPersonel supervisor) {
 		super();
 		this.titleLv = titleLv;
 		this.titleEn = titleEn;
 		this.aim = aim;
 		this.tasks = tasks;
-		this.statusFromSupervisor = statusFromSupervisor;
 		this.student = student;
 		this.supervisor = supervisor;
 		this.submitDateTime = LocalDateTime.now();
@@ -95,5 +117,7 @@ public class Thesis {
 	}
 	
 	
-
+	
+	
+	
 }

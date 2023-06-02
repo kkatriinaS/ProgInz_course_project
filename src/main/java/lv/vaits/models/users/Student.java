@@ -69,6 +69,8 @@ public class Student extends Person {
 		if(!debtCourses.contains(course)) {
 			debtCourses.add(course);
 		}
+	
+		}
 	}
 	
-}
+

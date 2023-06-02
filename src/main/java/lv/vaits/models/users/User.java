@@ -26,10 +26,10 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private long idu;
 	
-	//TODO data JPA anotācijas
+	/*//TODO data JPA anotācijas
 	//TODO validāciju anotācijas
 	@Column(name = "Username")
-	@NotNull
+	@NotNull*/
 	
 	private String username;
 	
@@ -44,7 +44,7 @@ public class User {
 	private String email;
 
 
-public User (@NotNull String password, @NotNull String username, @NotNull String email ) {
+public User (@NotNull String password, @NotNull String username ) {
 	super();
 	this.password = password;
 	this.email = email;

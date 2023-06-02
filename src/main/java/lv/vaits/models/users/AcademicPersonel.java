@@ -14,6 +14,7 @@ import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lv.vaits.models.Comment;
 import lv.vaits.models.Course;
 import lv.vaits.models.Thesis;
 import java.util.ArrayList;
@@ -51,5 +52,8 @@ public class AcademicPersonel extends Person {
 		super(idp, name, surname, personcode, user);
 		this.degree = degree;
 	}
+	
+	@OneToMany(mappedBy = "personel")
+	private Collection<Comment> comments;
 	
 }
